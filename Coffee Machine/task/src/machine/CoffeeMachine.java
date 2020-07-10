@@ -28,16 +28,14 @@ public class CoffeeMachine extends AbstractMachine {
         CustomizedResourceBundle resourceBundle = ResourceBundleUtil.getResourceBundle();
         int availableCoffeeCups = producibleItemsCalculator.execute(machineStore);
         String response;
-        if (availableCoffeeCups == 0) {
-            response = resourceBundle.get(RESPONSE_FAILURE_ICANNOT, 0);
-        } else if (availableCoffeeCups > 0) {
+        if (availableCoffeeCups > 0) {
             if (availableCoffeeCups == neededCoffeeCups) {
                 response = resourceBundle.get(RESPONSE_SUCCESS_ICAN);
             } else {
-                response = resourceBundle.get(RESPONSE_SUCCESS_ICAN_DO_MORE, availableCoffeeCups);
+                response = resourceBundle.get(RESPONSE_SUCCESS_ICAN_DO_MORE, availableCoffeeCups - neededCoffeeCups);
             }
         } else {
-            response = resourceBundle.get(RESPONSE_FAILURE_ICANNOT, availableCoffeeCups - neededCoffeeCups);
+            response = resourceBundle.get(RESPONSE_FAILURE_ICANNOT, availableCoffeeCups);
         }
 
         return response;
