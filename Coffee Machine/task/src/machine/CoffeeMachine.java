@@ -1,8 +1,11 @@
 package machine;
 
-import com.sun.tools.javac.Main;
 import service.coffeeCalculable.ProducibleItemsCalculator;
 import service.machineStoreCalculable.MachineStoreCalculable;
+import service.resourceBundle.CustomizedResourceBundle;
+import util.ResourceBundleUtil;
+
+import static machine.Constants.*;
 
 public class CoffeeMachine extends AbstractMachine {
 
@@ -22,15 +25,21 @@ public class CoffeeMachine extends AbstractMachine {
      */
     @Override
     public String getResponse(int neededCoffeeCups) {
+        CustomizedResourceBundle resourceBundle = ResourceBundleUtil.getResourceBundle();
         int availableCoffeeCups = producibleItemsCalculator.execute(machineStore);
         String response;
-        if (availableCoffeeCups == neededCoffeeCups) {
-            response = "Yes, I can make that amount of coffee";
-        } else if (availableCoffeeCups < neededCoffeeCups) {
-            response = String.format("No, I can make only %d cup(s) of coffee%n", availableCoffeeCups);
+        if (availableCoffeeCups == 0) {
+            response = resourceBundle.get(RESPONSE_FAILURE_ICANNOT, 0);
+        } else if (availableCoffeeCups > 0) {
+            if (availableCoffeeCups == neededCoffeeCups) {
+                response = resourceBundle.get(RESPONSE_SUCCESS_ICAN);
+            } else {
+                response = resourceBundle.get(RESPONSE_SUCCESS_ICAN_DO_MORE, availableCoffeeCups);
+            }
         } else {
-            response = String.format("Yes, I can make that amount of coffee (and even %d more than that)", availableCoffeeCups - neededCoffeeCups);
+            response = resourceBundle.get(RESPONSE_FAILURE_ICANNOT, availableCoffeeCups - neededCoffeeCups);
         }
+
         return response;
     }
 }
