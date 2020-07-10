@@ -1,3 +1,4 @@
+import app.Main;
 import machine.CoffeeMachine;
 import org.hyperskill.hstest.v6.stage.BaseStageTest;
 import org.hyperskill.hstest.v6.testcase.CheckResult;
@@ -21,7 +22,7 @@ class TestClue {
 public class CoffeeMachineTest extends BaseStageTest<TestClue> {
 
     public CoffeeMachineTest() {
-        super(CoffeeMachine.class);
+        super(Main.class);
     }
 
     @Override
