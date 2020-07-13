@@ -9,11 +9,17 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class ProducibleItemsCalculator implements MachineStoreCalculable {
+public class ItemsCalculator implements MachineStoreCalculable {
 
-    private final Calculable waterBasedCalculator = new WaterBasedCalculator();
-    private final Calculable milkBasedCalculator = new MilkBasedCalculator();
-    private final Calculable coffeeBeansBasedBasedCalculator = new CoffeeBeansBasedCalculator();
+    private final Calculable waterBasedCalculator;
+    private final Calculable milkBasedCalculator;
+    private final Calculable coffeeBeansBasedBasedCalculator;
+
+    public ItemsCalculator(Calculable waterBasedCalculator, Calculable milkBasedCalculator, Calculable coffeeBeansBasedBasedCalculator) {
+        this.waterBasedCalculator = waterBasedCalculator;
+        this.milkBasedCalculator = milkBasedCalculator;
+        this.coffeeBeansBasedBasedCalculator = coffeeBeansBasedBasedCalculator;
+    }
 
     @Override
     public int execute(MachineStore machineStore) {
