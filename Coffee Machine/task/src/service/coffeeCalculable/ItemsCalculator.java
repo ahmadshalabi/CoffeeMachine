@@ -1,7 +1,7 @@
 package service.coffeeCalculable;
 
-import machine.CoffeeMachineStore;
 import machine.MachineStore;
+import model.CoffeeMachineStore;
 import service.ingredientCalculable.Calculable;
 import service.machineStoreCalculable.MachineStoreCalculable;
 
