@@ -161,6 +161,76 @@ files:
         }
     }
   learner_created: false
+- name: src/app/Main.java
+  visible: true
+  learner_created: true
+- name: src/machine/Machine.java
+  visible: true
+  learner_created: true
+- name: src/service/coffeeCalculable/WaterBasedCalculator.java
+  visible: true
+  learner_created: true
+- name: src/util/ResourceBundleUtil.java
+  visible: true
+  learner_created: true
+- name: src/app/CoffeeMachineApplication.java
+  visible: true
+  learner_created: true
+- name: src/app/Constants.java
+  visible: true
+  learner_created: true
+- name: src/service/machineStoreCalculable/MachineStoreCalculable.java
+  visible: true
+  learner_created: true
+- name: src/service/ingredientCalculable/Calculable.java
+  visible: true
+  learner_created: true
+- name: src/main/resources/config.properties
+  visible: true
+  learner_created: true
+- name: src/machine/Constants.java
+  visible: true
+  learner_created: true
+- name: build.gradle
+  visible: true
+  learner_created: true
+- name: src/machine/AbstractMachine.java
+  visible: true
+  learner_created: true
+- name: src/main/resources/app.properties
+  visible: true
+  learner_created: true
+- name: src/service/resourceBundle/CustomizedResourceBundle.java
+  visible: true
+  learner_created: true
+- name: src/machine/MachineStore.java
+  visible: true
+  learner_created: true
+- name: src/service/coffeeCalculable/ProducibleItemsCalculator.java
+  visible: true
+  learner_created: true
+- name: src/model/CoffeeMachineStore.java
+  visible: true
+  learner_created: true
+- name: src/service/coffeeCalculable/ItemsCalculator.java
+  visible: true
+  learner_created: true
+- name: src/model/ResourceBundleFile.java
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/33/stages/177/implement
-status: Solved
-record: -1
+status: Failed
+feedback:
+  message: "Fatal error in test #1, please send the report to support@hyperskill.org\n\
+    \nOS Linux\nJava 11.0.7\nVendor Oracle Corporation\nTesting library version 7\n\
+    \norg.hyperskill.hstest.exception.outcomes.FatalError: No main method found\n\t\
+    at org.hyperskill.hstest.common.ReflectionUtils.getMainMethod(ReflectionUtils.java:18)\n\
+    \tat org.hyperskill.hstest.testing.TestedProgram.&lt;init&gt;(TestedProgram.java:51)\n\
+    \tat org.hyperskill.hstest.dynamic.input.DynamicTesting.lambda$toDynamicTesting$0(DynamicTesting.java:118)\n\
+    \tat org.hyperskill.hstest.testing.runner.AsyncMainMethodRunner.lambda$runMain$0(AsyncMainMethodRunner.java:30)\n\
+    \tat java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)\n\tat\
+    \ java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)\n\
+    \tat java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)\n\
+    \tat java.base/java.lang.Thread.run(Thread.java:834)"
+  time: Wed, 15 Jul 2020 14:19:07 UTC
+record: 1

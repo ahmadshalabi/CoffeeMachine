@@ -359,12 +359,105 @@ files:
     text: |
       package machine;
 
-      public class CoffeeMachine {
-          public static void main(String[] args) {
-              System.out.println("Hello World!");
-          }
-      }
-    learner_created: false
+    public class CoffeeMachine {
+        public static void main(String[] args) {
+            System.out.println("Hello World!");
+        }
+    }
+  learner_created: false
+- name: src/machine/Machine.java
+  visible: true
+  learner_created: true
+- name: src/machine/MachineStore.java
+  visible: true
+  learner_created: true
+- name: src/machine/AbstractMachine.java
+  visible: true
+  learner_created: true
+- name: src/main/resources/app.properties
+  visible: true
+  learner_created: true
+- name: src/main/resources/config.properties
+  visible: true
+  learner_created: true
+- name: build.gradle
+  visible: true
+  learner_created: true
+- name: src/util/ResourceBundleUtil.java
+  visible: true
+  learner_created: true
+- name: src/app/Constants.java
+  visible: true
+  learner_created: true
+- name: src/machine/Constants.java
+  visible: true
+  learner_created: true
+- name: src/action/Action.java
+  visible: true
+  learner_created: true
+- name: src/action/AttributeKeys.java
+  visible: true
+  learner_created: true
+- name: src/action/BuyAction.java
+  visible: true
+  learner_created: true
+- name: src/action/FillAction.java
+  visible: true
+  learner_created: true
+- name: src/action/TakeAction.java
+  visible: true
+  learner_created: true
+- name: src/model/Cappuccino.java
+  visible: true
+  learner_created: true
+- name: src/model/Coffee.java
+  visible: true
+  learner_created: true
+- name: src/model/Espresso.java
+  visible: true
+  learner_created: true
+- name: src/model/Item.java
+  visible: true
+  learner_created: true
+- name: src/model/Key.java
+  visible: true
+  learner_created: true
+- name: src/model/Latte.java
+  visible: true
+  learner_created: true
+- name: src/model/Request.java
+  visible: true
+  learner_created: true
+- name: src/model/Response.java
+  visible: true
+  learner_created: true
+- name: src/service/CoffeeMaker.java
+  visible: true
+  learner_created: true
+- name: src/service/coffeeCalculable/ItemsCalculator.java
+  visible: true
+  learner_created: true
+- name: src/model/CoffeeMachineStore.java
+  visible: true
+  learner_created: true
+- name: src/model/ResourceBundleFile.java
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/33/stages/178/implement
-status: Unchecked
-record: -1
+status: Failed
+feedback:
+  message: "Exception in test #1\n\nProbably you have nextInt() (or similar Scanner\
+    \ method) followed by nextLine() - in this situation nextLine() often gives an\
+    \ empty string and another one nextLine() call gives correct string.\n\njava.util.InputMismatchException\n\
+    \tat java.base/java.util.Scanner.throwFor(Scanner.java:939)\n\tat java.base/java.util.Scanner.next(Scanner.java:1594)\n\
+    \tat java.base/java.util.Scanner.nextInt(Scanner.java:2258)\n\tat java.base/java.util.Scanner.nextInt(Scanner.java:2212)\n\
+    \tat app.CoffeeMachineApplication.prompt(CoffeeMachineApplication.java:88)\n\t\
+    at app.CoffeeMachineApplication.getCoffeeMachineStore(CoffeeMachineApplication.java:52)\n\
+    \tat app.CoffeeMachineApplication.initCoffeeMachine(CoffeeMachineApplication.java:46)\n\
+    \tat app.CoffeeMachineApplication.init(CoffeeMachineApplication.java:39)\n\tat\
+    \ app.CoffeeMachineApplication.run(CoffeeMachineApplication.java:27)\n\tat app.Main.main(Main.java:6)\n\
+    \nPlease find below the output of your program during this failed test.\nNote\
+    \ that the &#39;&gt;&#39; character indicates the beginning of the input line.\n\
+    \n---\n\nWrite how many ml of water the coffee machine has:\n&gt; take"
+  time: Wed, 15 Jul 2020 14:30:04 UTC
+record: 3
