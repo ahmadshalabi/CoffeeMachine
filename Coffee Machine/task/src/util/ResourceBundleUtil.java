@@ -1,5 +1,6 @@
 package util;
 
+import model.ResourceBundleFile;
 import service.resourceBundle.CustomizedResourceBundle;
 
 import java.util.Locale;
@@ -11,6 +12,11 @@ public class ResourceBundleUtil {
     private static final String APP_PROPERTIES_FILENAME = CONFIG_RESOURCE_BUNDLE.getString("properties.filename");
 
     public static CustomizedResourceBundle getResourceBundle() {
-        return new CustomizedResourceBundle(APP_PROPERTIES_FILENAME, Locale.getDefault());
+        ResourceBundleFile resourceBundleFile = getResourceBundleFile();
+        return new CustomizedResourceBundle(resourceBundleFile);
+    }
+
+    private static ResourceBundleFile getResourceBundleFile() {
+        return new ResourceBundleFile(APP_PROPERTIES_FILENAME, Locale.getDefault());
     }
 }

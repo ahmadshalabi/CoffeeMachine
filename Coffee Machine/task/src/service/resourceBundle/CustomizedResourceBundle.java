@@ -1,23 +1,22 @@
 package service.resourceBundle;
 
+import model.ResourceBundleFile;
+
 import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.Enumeration;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class CustomizedResourceBundle extends ResourceBundle {
 
-    private final String filename;
-    private final Locale locale;
+    private final ResourceBundleFile resourceBundleFile;
 
-    public CustomizedResourceBundle(String filename, Locale locale) {
-        this.filename = filename;
-        this.locale = locale;
+    public CustomizedResourceBundle(ResourceBundleFile resourceBundleFile) {
+        this.resourceBundleFile = resourceBundleFile;
     }
 
     private ResourceBundle getResourceBundle() {
-        return ResourceBundle.getBundle(filename, locale);
+        return ResourceBundle.getBundle(resourceBundleFile.getFilename(), resourceBundleFile.getLocale());
     }
 
     public String get(String key, Object... args) {
