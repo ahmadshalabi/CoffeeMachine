@@ -1,4 +1,6 @@
-package machine;
+package model;
+
+import machine.MachineStore;
 
 public class CoffeeMachineStore implements MachineStore {
 

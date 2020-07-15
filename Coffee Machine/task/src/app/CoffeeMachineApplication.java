@@ -1,12 +1,12 @@
 package app;
 
 import machine.CoffeeMachine;
-import machine.CoffeeMachineStore;
 import machine.Machine;
 import machine.MachineStore;
+import model.CoffeeMachineStore;
 import service.coffeeCalculable.CoffeeBeansBasedCalculator;
-import service.coffeeCalculable.MilkBasedCalculator;
 import service.coffeeCalculable.ItemsCalculator;
+import service.coffeeCalculable.MilkBasedCalculator;
 import service.coffeeCalculable.WaterBasedCalculator;
 import service.ingredientCalculable.Calculable;
 import service.machineStoreCalculable.MachineStoreCalculable;
