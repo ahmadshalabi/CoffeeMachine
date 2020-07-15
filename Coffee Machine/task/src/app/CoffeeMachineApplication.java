@@ -23,7 +23,7 @@ public class CoffeeMachineApplication {
     private static Scanner reader;
     private static Machine machine;
 
-    public static void run(Class clazz, String[] args) {
+    public static void run(Class<?> clazz, String[] args) {
         init();
         int neededCoffeeCups = prompt(PROMPT_CUPS);
         String response = machine.getResponse(neededCoffeeCups);
