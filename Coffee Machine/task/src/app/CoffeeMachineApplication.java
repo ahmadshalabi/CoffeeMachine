@@ -4,6 +4,7 @@ import constant.Constants;
 import model.Item;
 import model.Key;
 import model.MachineStore;
+import service.IO.Reader;
 import service.machine.FabricableService;
 import service.machine.FabricableServiceImpl;
 import service.machine.Machine;
@@ -25,13 +26,13 @@ public class CoffeeMachineApplication {
     private static final Key<String> COFFEE = Key.create("coffee");
 
     private static CustomizedResourceBundle resourceBundle;
-    private static Scanner reader;
+    private static Reader reader;
     private static MachineStore machineStore;
     private static Machine machine;
 
     public static void run(Class<?> clazz, String[] args) {
         init();
-        int neededCoffeeCups = prompt(PROMPT_CUPS);
+        int neededCoffeeCups = reader.prompt(PROMPT_CUPS);
         String response = machine.getResponse(neededCoffeeCups);
         System.out.println(response);
     }
@@ -41,7 +42,8 @@ public class CoffeeMachineApplication {
      */
     private static void init() {
         resourceBundle = ResourceBundleUtil.getResourceBundle();
-        reader = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
+        reader = new Reader(resourceBundle, scanner);
         initCoffeeMachine();
     }
 
@@ -60,9 +62,9 @@ public class CoffeeMachineApplication {
     }
 
     private static Map<Key<Integer>, Integer> populateStorage() {
-        int water = prompt(PROMPT_INGREDIENT, resourceBundle.get(UNIT_VOLUME), resourceBundle.get(WATER));
-        int milk = prompt(PROMPT_INGREDIENT, resourceBundle.get(UNIT_VOLUME), resourceBundle.get(MILK));
-        int coffeeBeans = prompt(PROMPT_INGREDIENT, resourceBundle.get(UNIT_MASS), resourceBundle.get(Constants.COFFEE_BEANS));
+        int water = reader.prompt(PROMPT_INGREDIENT, resourceBundle.get(UNIT_VOLUME), resourceBundle.get(WATER));
+        int milk = reader.prompt(PROMPT_INGREDIENT, resourceBundle.get(UNIT_VOLUME), resourceBundle.get(MILK));
+        int coffeeBeans = reader.prompt(PROMPT_INGREDIENT, resourceBundle.get(UNIT_MASS), resourceBundle.get(Constants.COFFEE_BEANS));
         Map<Key<Integer>, Integer> storage = new HashMap<>();
         storage.put(WATER_KEY, water);
         storage.put(MILK_KEY, milk);
@@ -80,15 +82,5 @@ public class CoffeeMachineApplication {
         ingredients.put(MILK_KEY, 50);
         ingredients.put(COFFEE_BEANS_KEY, 15);
         return new Item(COFFEE, ingredients, 0);
-    }
-
-    /**
-     * @param key    key mapped to message in properties file that explain what the user MUST be enter as input
-     * @param params params to get a customized message
-     * @return see {@link Scanner#nextInt()} return
-     */
-    private static int prompt(String key, Object... params) {
-        System.out.println(resourceBundle.get(key, params));
-        return reader.nextInt();
     }
 }
