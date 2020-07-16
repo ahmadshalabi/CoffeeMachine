@@ -170,67 +170,16 @@ files:
         }
     }
   learner_created: false
-- name: src/machine/CoffeeMachine.java
-  visible: true
-  text: |
-    package machine;
-
-    import java.util.Scanner;
-
-    public class CoffeeMachine {
-        private static final int WATER_OF_ONE_CUP_OF_COFFEE = 200;
-        private static final int MILK_OF_ONE_CUP_OF_COFFEE = 50;
-        private static final int BEANS_OF_ONE_CUP_OF_COFFEE = 15;
-
-        public static void main(String[] args) {
-            final Scanner reader = new Scanner(System.in);
-
-            System.out.println("Write how many cups of coffee you will need:");
-            int cupsOfCoffee = reader.nextInt();
-            System.out.printf("For %d cups of coffee you will need:%n", cupsOfCoffee);
-            System.out.printf("%d ml of water%n", cupsOfCoffee * WATER_OF_ONE_CUP_OF_COFFEE);
-            System.out.printf("%d ml of milk%n", cupsOfCoffee * MILK_OF_ONE_CUP_OF_COFFEE);
-            System.out.printf("%d g of coffee beans%n", cupsOfCoffee * BEANS_OF_ONE_CUP_OF_COFFEE);
-        }
-    }
-  learner_created: false
 - name: src/util/ResourceBundleUtil.java
   visible: true
   learner_created: true
 - name: src/main/resources/config.properties
   visible: true
   learner_created: true
-- name: src/service/ingredientCalculable/Calculable.java
-  visible: true
-  learner_created: true
 - name: src/service/resourceBundle/CustomizedResourceBundle.java
   visible: true
   learner_created: true
-- name: src/service/machineStoreCalculable/MachineStoreCalculable.java
-  visible: true
-  learner_created: true
-- name: src/service/coffeeCalculable/ProducibleItemsCalculator.java
-  visible: true
-  learner_created: true
-- name: src/machine/Constants.java
-  visible: true
-  learner_created: true
-- name: src/machine/MachineStore.java
-  visible: true
-  learner_created: true
-- name: src/machine/Machine.java
-  visible: true
-  learner_created: true
-- name: src/app/Constants.java
-  visible: true
-  learner_created: true
-- name: src/machine/AbstractMachine.java
-  visible: true
-  learner_created: true
 - name: build.gradle
-  visible: true
-  learner_created: true
-- name: src/model/CoffeeMachineStore.java
   visible: true
   learner_created: true
 - name: src/main/resources/app.properties
@@ -239,16 +188,19 @@ files:
 - name: src/app/Main.java
   visible: true
   learner_created: true
-- name: src/service/coffeeCalculable/ItemsCalculator.java
-  visible: true
-  learner_created: true
-- name: src/service/coffeeCalculable/WaterBasedCalculator.java
-  visible: true
-  learner_created: true
 - name: src/model/ResourceBundleFile.java
   visible: true
   learner_created: true
 - name: src/app/CoffeeMachineApplication.java
+  visible: true
+  learner_created: true
+- name: src/constant/Constants.java
+  visible: true
+  learner_created: true
+- name: src/model/Item.java
+  visible: true
+  learner_created: true
+- name: src/model/Key.java
   visible: true
   learner_created: true
 feedback_link: https://hyperskill.org/projects/33/stages/177/implement
