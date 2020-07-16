@@ -585,13 +585,25 @@ files:
 - name: src/model/Item.java
   visible: true
   learner_created: true
-- name: src/constant/Constants.java
-  visible: true
-  learner_created: true
 - name: src/model/Key.java
   visible: true
   learner_created: true
 - name: src/service/IO/Reader.java
+  visible: true
+  learner_created: true
+- name: src/constants/properites/Ingredients.java
+  visible: true
+  learner_created: true
+- name: src/constants/properites/Prompts.java
+  visible: true
+  learner_created: true
+- name: src/constants/properites/Units.java
+  visible: true
+  learner_created: true
+- name: src/constants/attributeKeys/Ingredients.java
+  visible: true
+  learner_created: true
+- name: src/constants/attributeKeys/Items.java
   visible: true
   learner_created: true
 feedback_link: https://hyperskill.org/projects/33/stages/178/implement
@@ -602,14 +614,13 @@ feedback:
     \ empty string and another one nextLine() call gives correct string.\n\njava.util.InputMismatchException\n\
     \tat java.base/java.util.Scanner.throwFor(Scanner.java:939)\n\tat java.base/java.util.Scanner.next(Scanner.java:1594)\n\
     \tat java.base/java.util.Scanner.nextInt(Scanner.java:2258)\n\tat java.base/java.util.Scanner.nextInt(Scanner.java:2212)\n\
-    \tat app.CoffeeMachineApplication.prompt(CoffeeMachineApplication.java:92)\n\t\
-    at app.CoffeeMachineApplication.populateStorage(CoffeeMachineApplication.java:63)\n\
-    \tat app.CoffeeMachineApplication.getCoffeeMachineStore(CoffeeMachineApplication.java:58)\n\
-    \tat app.CoffeeMachineApplication.initCoffeeMachine(CoffeeMachineApplication.java:52)\n\
-    \tat app.CoffeeMachineApplication.init(CoffeeMachineApplication.java:45)\n\tat\
-    \ app.CoffeeMachineApplication.run(CoffeeMachineApplication.java:33)\n\tat app.Main.main(Main.java:6)\n\
+    \tat service.IO.Reader.prompt(Reader.java:24)\n\tat app.CoffeeMachineApplication.populateStorage(CoffeeMachineApplication.java:66)\n\
+    \tat app.CoffeeMachineApplication.getCoffeeMachineStore(CoffeeMachineApplication.java:61)\n\
+    \tat app.CoffeeMachineApplication.initCoffeeMachine(CoffeeMachineApplication.java:55)\n\
+    \tat app.CoffeeMachineApplication.init(CoffeeMachineApplication.java:48)\n\tat\
+    \ app.CoffeeMachineApplication.run(CoffeeMachineApplication.java:35)\n\tat app.Main.main(Main.java:6)\n\
     \nPlease find below the output of your program during this failed test.\nNote\
     \ that the &#39;&gt;&#39; character indicates the beginning of the input line.\n\
     \n---\n\nWrite how many ml of water the coffee machine has:\n&gt; take"
-  time: Thu, 16 Jul 2020 03:34:27 UTC
+  time: Thu, 16 Jul 2020 04:02:46 UTC
 record: 3

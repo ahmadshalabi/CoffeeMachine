@@ -8,7 +8,7 @@ import service.machine.FabricableService;
 import service.resourceBundle.CustomizedResourceBundle;
 import util.ResourceBundleUtil;
 
-import static constant.ResponseConstants.*;
+import static constants.properites.Responses.*;
 
 public class CoffeeMachine extends AbstractMachine {
 
@@ -27,11 +27,11 @@ public class CoffeeMachine extends AbstractMachine {
         int availableCoffeeCups = fabricableService.execute(COFFEE);
         String response;
         if (availableCoffeeCups == neededCoffeeCups) {
-            response = resourceBundle.get(RESPONSE_SUCCESS_ICAN);
+            response = resourceBundle.get(ICAN_RESPONSE);
         } else if (availableCoffeeCups > neededCoffeeCups) {
-            response = resourceBundle.get(RESPONSE_SUCCESS_ICAN_DO_MORE, availableCoffeeCups - neededCoffeeCups);
+            response = resourceBundle.get(ICAN_DO_MORE_RESPONSE, availableCoffeeCups - neededCoffeeCups);
         } else {
-            response = resourceBundle.get(RESPONSE_FAILURE_ICANNOT, availableCoffeeCups);
+            response = resourceBundle.get(ICANNOT_RESPONSE, availableCoffeeCups);
         }
         return response;
     }
