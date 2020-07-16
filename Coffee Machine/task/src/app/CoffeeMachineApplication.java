@@ -15,7 +15,7 @@ import util.ResourceBundleUtil;
 
 import java.util.Scanner;
 
-import static app.Constants.*;
+import static constant.Constants.*;
 
 public class CoffeeMachineApplication {
 

@@ -4,7 +4,7 @@ import service.machineStoreCalculable.MachineStoreCalculable;
 import service.resourceBundle.CustomizedResourceBundle;
 import util.ResourceBundleUtil;
 
-import static machine.Constants.*;
+import static constant.ResponseConstants.*;
 
 public class CoffeeMachine extends AbstractMachine {
 
