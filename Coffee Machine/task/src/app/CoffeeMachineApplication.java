@@ -1,26 +1,32 @@
 package app;
 
-import machine.CoffeeMachine;
-import machine.Machine;
-import machine.MachineStore;
-import model.CoffeeMachineStore;
-import service.coffeeCalculable.CoffeeBeansBasedCalculator;
-import service.coffeeCalculable.ItemsCalculator;
-import service.coffeeCalculable.MilkBasedCalculator;
-import service.coffeeCalculable.WaterBasedCalculator;
-import service.ingredientCalculable.Calculable;
-import service.machineStoreCalculable.MachineStoreCalculable;
+import constant.Constants;
+import model.Item;
+import model.Key;
+import model.MachineStore;
+import service.machine.FabricableService;
+import service.machine.FabricableServiceImpl;
+import service.machine.Machine;
+import service.machine.coffee.CoffeeMachine;
 import service.resourceBundle.CustomizedResourceBundle;
 import util.ResourceBundleUtil;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 import static constant.Constants.*;
 
 public class CoffeeMachineApplication {
 
+    private static final Key<Integer> WATER_KEY = Key.create("water");
+    private static final Key<Integer> MILK_KEY = Key.create("milk");
+    private static final Key<Integer> COFFEE_BEANS_KEY = Key.create("coffeeBeans");
+    private static final Key<String> COFFEE = Key.create("coffee");
+
     private static CustomizedResourceBundle resourceBundle;
     private static Scanner reader;
+    private static MachineStore machineStore;
     private static Machine machine;
 
     public static void run(Class<?> clazz, String[] args) {
@@ -43,39 +49,37 @@ public class CoffeeMachineApplication {
      * Initialize the coffee machine with needed ingredient
      */
     private static void initCoffeeMachine() {
-        MachineStore machineStore = getCoffeeMachineStore();
-        MachineStoreCalculable machineStoreCalculable = getMachineStoreCalculableService();
-        machine = getCoffeeMachine(machineStore, machineStoreCalculable);
+        machineStore = getCoffeeMachineStore();
+        FabricableService fabricableService = getFabricableService();
+        machine = new CoffeeMachine(machineStore, fabricableService);
     }
 
     private static MachineStore getCoffeeMachineStore() {
+        Map<Key<Integer>, Integer> storage = populateStorage();
+        return new MachineStore(storage);
+    }
+
+    private static Map<Key<Integer>, Integer> populateStorage() {
         int water = prompt(PROMPT_INGREDIENT, resourceBundle.get(UNIT_VOLUME), resourceBundle.get(WATER));
         int milk = prompt(PROMPT_INGREDIENT, resourceBundle.get(UNIT_VOLUME), resourceBundle.get(MILK));
-        int coffeeBeans = prompt(PROMPT_INGREDIENT, resourceBundle.get(UNIT_MASS), resourceBundle.get(COFFEE_BEANS));
-        return new CoffeeMachineStore(water, milk, coffeeBeans);
+        int coffeeBeans = prompt(PROMPT_INGREDIENT, resourceBundle.get(UNIT_MASS), resourceBundle.get(Constants.COFFEE_BEANS));
+        Map<Key<Integer>, Integer> storage = new HashMap<>();
+        storage.put(WATER_KEY, water);
+        storage.put(MILK_KEY, milk);
+        storage.put(COFFEE_BEANS_KEY, coffeeBeans);
+        return storage;
     }
 
-    private static MachineStoreCalculable getMachineStoreCalculableService() {
-        final Calculable waterBasedCalculator = getWaterBasedCalculator();
-        final Calculable milkBasedCalculator = getMilkBasedCalculator();
-        final Calculable coffeeBeansBasedCalculator = getCoffeeBeansBasedCalculator();
-        return new ItemsCalculator(waterBasedCalculator, milkBasedCalculator, coffeeBeansBasedCalculator);
+    private static FabricableService getFabricableService() {
+        return new FabricableServiceImpl(machineStore);
     }
 
-    private static Calculable getCoffeeBeansBasedCalculator() {
-        return new CoffeeBeansBasedCalculator();
-    }
-
-    private static Calculable getMilkBasedCalculator() {
-        return new MilkBasedCalculator();
-    }
-
-    private static Calculable getWaterBasedCalculator() {
-        return new WaterBasedCalculator();
-    }
-
-    private static Machine getCoffeeMachine(MachineStore machineStore, MachineStoreCalculable machineStoreCalculable) {
-        return new CoffeeMachine(machineStore, machineStoreCalculable);
+    public static Item getCoffee() {
+        Map<Key<Integer>, Integer> ingredients = new HashMap<>();
+        ingredients.put(WATER_KEY, 200);
+        ingredients.put(MILK_KEY, 50);
+        ingredients.put(COFFEE_BEANS_KEY, 15);
+        return new Item(COFFEE, ingredients, 0);
     }
 
     /**
