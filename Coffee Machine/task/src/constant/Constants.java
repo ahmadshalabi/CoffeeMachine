@@ -1,4 +1,4 @@
-package app;
+package constant;
 
 public interface Constants {
     String PROMPT_CUPS = "prompt.cups";
