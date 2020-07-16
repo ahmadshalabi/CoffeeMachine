@@ -1,4 +1,4 @@
-package service.machine;
+package services.machine;
 
 public interface Machine {
 

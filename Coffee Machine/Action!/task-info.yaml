@@ -366,32 +366,6 @@ files:
         }
     }
   learner_created: false
-- name: src/util/ResourceBundleUtil.java
-  visible: true
-  text: |-
-    package util;
-
-    import model.ResourceBundleFile;
-    import service.resourceBundle.CustomizedResourceBundle;
-
-    import java.util.Locale;
-    import java.util.ResourceBundle;
-
-    public class ResourceBundleUtil {
-
-        private static final ResourceBundle CONFIG_RESOURCE_BUNDLE = ResourceBundle.getBundle("config");
-        private static final String APP_PROPERTIES_FILENAME = CONFIG_RESOURCE_BUNDLE.getString("properties.filename");
-
-        public static CustomizedResourceBundle getResourceBundle() {
-            ResourceBundleFile resourceBundleFile = getResourceBundleFile();
-            return new CustomizedResourceBundle(resourceBundleFile);
-        }
-
-        private static ResourceBundleFile getResourceBundleFile() {
-            return new ResourceBundleFile(APP_PROPERTIES_FILENAME, Locale.getDefault());
-        }
-    }
-  learner_created: false
 - name: src/app/CoffeeMachineApplication.java
   visible: true
   text: |-
@@ -515,7 +489,22 @@ files:
     response.success.ICanDoMore=Yes, I can make that amount of coffee (and even {0} more than that)
     response.failure.ICannot=No, I can make only {0} cup(s) of coffee
   learner_created: false
-- name: src/service/resourceBundle/CustomizedResourceBundle.java
+- name: src/constants/properites/Ingredients.java
+  visible: true
+  learner_created: true
+- name: src/constants/properites/Prompts.java
+  visible: true
+  learner_created: true
+- name: src/constants/properites/Units.java
+  visible: true
+  learner_created: true
+- name: src/constants/attributeKeys/Ingredients.java
+  visible: true
+  learner_created: true
+- name: src/constants/attributeKeys/Items.java
+  visible: true
+  learner_created: true
+- name: src/modelservices/resourceBundle/CustomizedResourceBundle.java
   visible: true
   text: |-
     package service.resourceBundle;
@@ -556,7 +545,10 @@ files:
         }
     }
   learner_created: false
-- name: src/model/ResourceBundleFile.java
+- name: src/modelservices/IO/Reader.java
+  visible: true
+  learner_created: true
+- name: src/models/ResourceBundleFile.java
   visible: true
   text: |-
     package model;
@@ -582,30 +574,38 @@ files:
         }
     }
   learner_created: false
-- name: src/model/Item.java
+- name: src/models/Item.java
   visible: true
   learner_created: true
-- name: src/model/Key.java
+- name: src/models/Key.java
   visible: true
   learner_created: true
-- name: src/service/IO/Reader.java
+- name: src/utils/ResourceBundleUtil.java
   visible: true
-  learner_created: true
-- name: src/constants/properites/Ingredients.java
-  visible: true
-  learner_created: true
-- name: src/constants/properites/Prompts.java
-  visible: true
-  learner_created: true
-- name: src/constants/properites/Units.java
-  visible: true
-  learner_created: true
-- name: src/constants/attributeKeys/Ingredients.java
-  visible: true
-  learner_created: true
-- name: src/constants/attributeKeys/Items.java
-  visible: true
-  learner_created: true
+  text: |-
+    package util;
+
+    import model.ResourceBundleFile;
+    import service.resourceBundle.CustomizedResourceBundle;
+
+    import java.util.Locale;
+    import java.util.ResourceBundle;
+
+    public class ResourceBundleUtil {
+
+        private static final ResourceBundle CONFIG_RESOURCE_BUNDLE = ResourceBundle.getBundle("config");
+        private static final String APP_PROPERTIES_FILENAME = CONFIG_RESOURCE_BUNDLE.getString("properties.filename");
+
+        public static CustomizedResourceBundle getResourceBundle() {
+            ResourceBundleFile resourceBundleFile = getResourceBundleFile();
+            return new CustomizedResourceBundle(resourceBundleFile);
+        }
+
+        private static ResourceBundleFile getResourceBundleFile() {
+            return new ResourceBundleFile(APP_PROPERTIES_FILENAME, Locale.getDefault());
+        }
+    }
+  learner_created: false
 feedback_link: https://hyperskill.org/projects/33/stages/178/implement
 status: Failed
 feedback:
@@ -614,7 +614,7 @@ feedback:
     \ empty string and another one nextLine() call gives correct string.\n\njava.util.InputMismatchException\n\
     \tat java.base/java.util.Scanner.throwFor(Scanner.java:939)\n\tat java.base/java.util.Scanner.next(Scanner.java:1594)\n\
     \tat java.base/java.util.Scanner.nextInt(Scanner.java:2258)\n\tat java.base/java.util.Scanner.nextInt(Scanner.java:2212)\n\
-    \tat service.IO.Reader.prompt(Reader.java:24)\n\tat app.CoffeeMachineApplication.populateStorage(CoffeeMachineApplication.java:66)\n\
+    \tat services.IO.Reader.prompt(Reader.java:24)\n\tat app.CoffeeMachineApplication.populateStorage(CoffeeMachineApplication.java:66)\n\
     \tat app.CoffeeMachineApplication.getCoffeeMachineStore(CoffeeMachineApplication.java:61)\n\
     \tat app.CoffeeMachineApplication.initCoffeeMachine(CoffeeMachineApplication.java:55)\n\
     \tat app.CoffeeMachineApplication.init(CoffeeMachineApplication.java:48)\n\tat\
@@ -622,5 +622,5 @@ feedback:
     \nPlease find below the output of your program during this failed test.\nNote\
     \ that the &#39;&gt;&#39; character indicates the beginning of the input line.\n\
     \n---\n\nWrite how many ml of water the coffee machine has:\n&gt; take"
-  time: Thu, 16 Jul 2020 04:02:46 UTC
+  time: Thu, 16 Jul 2020 04:04:25 UTC
 record: 3

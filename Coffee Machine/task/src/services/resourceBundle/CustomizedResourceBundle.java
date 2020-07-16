@@ -1,6 +1,6 @@
-package service.resourceBundle;
+package services.resourceBundle;
 
-import model.ResourceBundleFile;
+import models.ResourceBundleFile;
 
 import java.text.MessageFormat;
 import java.util.Collections;

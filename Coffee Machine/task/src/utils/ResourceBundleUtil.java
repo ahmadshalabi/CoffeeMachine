@@ -1,7 +1,7 @@
-package util;
+package utils;
 
-import model.ResourceBundleFile;
-import service.resourceBundle.CustomizedResourceBundle;
+import models.ResourceBundleFile;
+import services.resourceBundle.CustomizedResourceBundle;
 
 import java.util.Locale;
 import java.util.ResourceBundle;

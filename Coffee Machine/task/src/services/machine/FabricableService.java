@@ -1,6 +1,6 @@
-package service.machine;
+package services.machine;
 
-import model.Item;
+import models.Item;
 
 public interface FabricableService {
 

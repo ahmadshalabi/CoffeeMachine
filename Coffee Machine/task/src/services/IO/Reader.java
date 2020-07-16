@@ -1,6 +1,6 @@
-package service.IO;
+package services.IO;
 
-import service.resourceBundle.CustomizedResourceBundle;
+import services.resourceBundle.CustomizedResourceBundle;
 
 import java.util.Scanner;
 

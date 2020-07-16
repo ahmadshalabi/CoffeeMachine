@@ -1,12 +1,12 @@
-package service.machine.coffee;
+package services.machine.coffee;
 
 import app.CoffeeMachineApplication;
-import model.Item;
-import model.MachineStore;
-import service.machine.AbstractMachine;
-import service.machine.FabricableService;
-import service.resourceBundle.CustomizedResourceBundle;
-import util.ResourceBundleUtil;
+import models.Item;
+import models.MachineStore;
+import services.machine.AbstractMachine;
+import services.machine.FabricableService;
+import services.resourceBundle.CustomizedResourceBundle;
+import utils.ResourceBundleUtil;
 
 import static constants.properites.Responses.*;
 

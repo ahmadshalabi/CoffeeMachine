@@ -1,7 +1,7 @@
-package service.machine;
+package services.machine;
 
-import model.Item;
-import model.MachineStore;
+import models.Item;
+import models.MachineStore;
 
 import java.util.Comparator;
 

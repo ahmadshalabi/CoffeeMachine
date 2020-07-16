@@ -1,6 +1,6 @@
 package constants.attributeKeys;
 
-import model.Key;
+import models.Key;
 
 public interface Ingredients {
     Key<Integer> WATER_KEY = Key.create("water");

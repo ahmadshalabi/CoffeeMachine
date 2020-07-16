@@ -1,15 +1,15 @@
 package app;
 
-import model.Item;
-import model.Key;
-import model.MachineStore;
-import service.IO.Reader;
-import service.machine.FabricableService;
-import service.machine.FabricableServiceImpl;
-import service.machine.Machine;
-import service.machine.coffee.CoffeeMachine;
-import service.resourceBundle.CustomizedResourceBundle;
-import util.ResourceBundleUtil;
+import models.Item;
+import models.Key;
+import models.MachineStore;
+import services.IO.Reader;
+import services.machine.FabricableService;
+import services.machine.FabricableServiceImpl;
+import services.machine.Machine;
+import services.machine.coffee.CoffeeMachine;
+import services.resourceBundle.CustomizedResourceBundle;
+import utils.ResourceBundleUtil;
 
 import java.util.HashMap;
 import java.util.Map;

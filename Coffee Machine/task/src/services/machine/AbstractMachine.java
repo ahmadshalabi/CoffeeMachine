@@ -1,6 +1,6 @@
-package service.machine;
+package services.machine;
 
-import model.MachineStore;
+import models.MachineStore;
 
 public abstract class AbstractMachine implements Machine {
 
