@@ -1,0 +1,1039 @@
+type: edu
+custom_name: stage5
+files:
+- name: test/CoffeeMachineTest.java
+  visible: false
+  text: |
+    import machine.CoffeeMachine;
+    import org.hyperskill.hstest.stage.StageTest;
+    import org.hyperskill.hstest.testcase.CheckResult;
+    import org.hyperskill.hstest.testcase.TestCase;
+
+    import java.util.ArrayList;
+    import java.util.List;
+
+
+    class TestClue {
+        int water;
+        int milk;
+        int beans;
+        int cups;
+        int money;
+        String feedback;
+        TestClue(int w, int m, int b, int c, int mo, String feedback) {
+            water = w;
+            milk = m;
+            beans = b;
+            cups = c;
+            money = mo;
+            this.feedback = feedback;
+        }
+    }
+
+    public class CoffeeMachineTest extends StageTest<TestClue> {
+
+        public CoffeeMachineTest() {
+            super(CoffeeMachine.class);
+        }
+
+        @Override
+        public List<TestCase<TestClue>> generate() {
+            return List.of(
+                new TestCase<TestClue>()
+                    .setAttach(new TestClue(
+                    700 - 400,
+                    390 - 540,
+                    80 - 120 ,
+                    7 - 9,
+                    0 - 550,
+                        "This test is exactly " +
+                            "like in the example - try to run it by yourself"))
+                    .setInput(
+                        "remaining\n" +
+                        "buy\n" +
+                        "2\n" +
+                        "buy\n" +
+                        "2\n" +
+                        "fill\n" +
+                        "1000\n" +
+                        "0\n" +
+                        "0\n" +
+                        "0\n" +
+                        "buy\n" +
+                        "2\n" +
+                        "take\n" +
+                        "remaining\n" +
+                        "exit\n"),
+
+                new TestCase<TestClue>()
+                    .setAttach(new TestClue(
+                    3000,
+                    3000,
+                    3000 ,
+                    3000,
+                    0,
+                        "This test checks \"fill\" action"))
+                    .setInput(
+                        "remaining\n" +
+                        "fill\n" +
+                        "3000\n" +
+                        "3000\n" +
+                        "3000\n" +
+                        "3000\n" +
+                        "remaining\n" +
+                        "exit\n"),
+
+                new TestCase<TestClue>()
+                    .setAttach(new TestClue(
+                    -250,
+                    0,
+                    -16 ,
+                    -1,
+                    4, "This test checks \"buy\" " +
+                        "action with the first variant of coffee"))
+                    .setInput(
+                        "remaining\n" +
+                        "buy\n" +
+                        "1\n" +
+                        "remaining\n" +
+                        "exit\n"),
+
+                new TestCase<TestClue>()
+                    .setAttach(new TestClue(
+                    -350,
+                    -75,
+                    -20 ,
+                    -1,
+                    7, "This test checks \"buy\" " +
+                        "action with the second variant of coffee"))
+                    .setInput(
+                        "remaining\n" +
+                        "buy\n" +
+                        "2\n" +
+                        "remaining\n" +
+                        "exit\n"),
+
+                new TestCase<TestClue>()
+                    .setAttach(new TestClue(
+                    -200,
+                    -100,
+                    -12 ,
+                    -1,
+                    6, "This test checks \"buy\" " +
+                        "action with the third variant of coffee"))
+                    .setInput(
+                        "remaining\n" +
+                        "buy\n" +
+                        "3\n" +
+                        "remaining\n" +
+                        "exit\n"),
+
+                new TestCase<TestClue>()
+                    .setAttach(new TestClue(
+                    0,
+                    0,
+                    0 ,
+                    0,
+                    -550, "This test checks \"take\" action"))
+                    .setInput(
+                        "remaining\n" +
+                        "take\n" +
+                        "remaining\n" +
+                        "exit\n"),
+
+                new TestCase<TestClue>()
+                    .setAttach(new TestClue(
+                    0,
+                    0,
+                    0 ,
+                    0,
+                    0, "This test checks \"back\" " +
+                        "action right after \"buy\" action"))
+                    .setInput(
+                        "remaining\n" +
+                        "buy\n" +
+                        "back\n" +
+                        "remaining\n" +
+                        "exit\n")
+            );
+        }
+
+        @Override
+        public CheckResult check(String reply, TestClue clue) {
+            String[] lines = reply.split("\\n");
+
+            if (lines.length <= 1) {
+                return CheckResult.wrong("");
+            }
+
+            int water_ = clue.water;
+            int milk_ = clue.milk;
+            int beans_ = clue.beans;
+            int cups_ = clue.cups;
+            int money_ = clue.money;
+
+            List<Integer> milk = new ArrayList<>();
+            List<Integer> water = new ArrayList<>();
+            List<Integer> beans = new ArrayList<>();
+            List<Integer> cups = new ArrayList<>();
+            List<Integer> money = new ArrayList<>();
+
+            for (String line : lines) {
+                line = line.replace("$", "").trim();
+                String[] words = line.split("\\s+");
+                if (words.length == 0) {
+                    continue;
+                }
+                String firstWord = words[0];
+                int amount;
+                try {
+                    amount = Integer.parseInt(firstWord);
+                }
+                catch (Exception e) {
+                    continue;
+                }
+                if (line.contains("milk")) {
+                    milk.add(amount);
+                }
+                else if (line.contains("water")) {
+                    water.add(amount);
+                }
+                else if (line.contains("beans")) {
+                    beans.add(amount);
+                }
+                else if (line.contains("cups")) {
+                    cups.add(amount);
+                }
+                else if (line.contains("money")) {
+                    money.add(amount);
+                }
+            }
+
+            if (milk.size() != 2) {
+                return new CheckResult(false,
+                    "There should be two lines with \"milk\", " +
+                        "found: " + milk.size());
+            }
+
+            if (water.size() != 2) {
+                return new CheckResult(false,
+                    "There should be two lines with \"water\", " +
+                        "found: " + water.size());
+            }
+
+            if (beans.size() != 2) {
+                return new CheckResult(false,
+                    "There should be two lines with \"beans\", " +
+                        "found: " + beans.size());
+            }
+
+            if (cups.size() != 2) {
+                return new CheckResult(false,
+                    "There should be two lines with \"cups\", " +
+                        "found: " + cups.size());
+            }
+
+            if (money.size() != 2) {
+                return new CheckResult(false,
+                    "There should be two lines with \"money\", " +
+                        "found: " + money.size());
+            }
+
+            int milk0 = milk.get(0);
+            int milk1 = milk.get(milk.size() - 1);
+
+            int water0 = water.get(0);
+            int water1 = water.get(water.size() - 1);
+
+            int beans0 = beans.get(0);
+            int beans1 = beans.get(beans.size() - 1);
+
+            int cups0 = cups.get(0);
+            int cups1 = cups.get(cups.size() - 1);
+
+            int money0 = money.get(0);
+            int money1 = money.get(money.size() - 1);
+
+            int diffWater = water1 - water0;
+            int diffMilk = milk1 - milk0;
+            int diffBeans = beans1 - beans0;
+            int diffCups = cups1 - cups0;
+            int diffMoney = money1 - money0;
+
+            boolean isCorrect =
+                diffWater == water_ &&
+                diffMilk == milk_ &&
+                diffBeans == beans_ &&
+                diffCups == cups_ &&
+                diffMoney == money_;
+
+            return new CheckResult(isCorrect, clue.feedback);
+        }
+    }
+  learner_created: false
+- name: src/app/CoffeeMachineApplication.java
+  visible: true
+  text: |-
+    package app;
+
+    import machine.CoffeeMachine;
+    import machine.Machine;
+    import machine.MachineStore;
+    import model.CoffeeMachineStore;
+    import service.coffeeCalculable.CoffeeBeansBasedCalculator;
+    import service.coffeeCalculable.ItemsCalculator;
+    import service.coffeeCalculable.MilkBasedCalculator;
+    import service.coffeeCalculable.WaterBasedCalculator;
+    import service.ingredientCalculable.Calculable;
+    import service.machineStoreCalculable.MachineStoreCalculable;
+    import service.resourceBundle.CustomizedResourceBundle;
+    import util.ResourceBundleUtil;
+
+    import java.util.Scanner;
+
+    import static constant.Constants.*;
+
+    public class CoffeeMachineApplication {
+
+        private static CustomizedResourceBundle resourceBundle;
+        private static Scanner reader;
+        private static Machine machine;
+
+        public static void run(Class<?> clazz, String[] args) {
+            init();
+            int neededCoffeeCups = prompt(PROMPT_CUPS);
+            String response = machine.getResponse(neededCoffeeCups);
+            System.out.println(response);
+        }
+
+        /**
+         * Initialize Application
+         */
+        private static void init() {
+            resourceBundle = ResourceBundleUtil.getResourceBundle();
+            reader = new Scanner(System.in);
+            initCoffeeMachine();
+        }
+
+        /**
+         * Initialize the coffee machine with needed ingredient
+         */
+        private static void initCoffeeMachine() {
+            MachineStore machineStore = getCoffeeMachineStore();
+            MachineStoreCalculable machineStoreCalculable = getMachineStoreCalculableService();
+            machine = getCoffeeMachine(machineStore, machineStoreCalculable);
+        }
+
+        private static MachineStore getCoffeeMachineStore() {
+            int water = prompt(PROMPT_INGREDIENT, resourceBundle.get(UNIT_VOLUME), resourceBundle.get(WATER));
+            int milk = prompt(PROMPT_INGREDIENT, resourceBundle.get(UNIT_VOLUME), resourceBundle.get(MILK));
+            int coffeeBeans = prompt(PROMPT_INGREDIENT, resourceBundle.get(UNIT_MASS), resourceBundle.get(COFFEE_BEANS));
+            return new CoffeeMachineStore(water, milk, coffeeBeans);
+        }
+
+        private static MachineStoreCalculable getMachineStoreCalculableService() {
+            final Calculable waterBasedCalculator = getWaterBasedCalculator();
+            final Calculable milkBasedCalculator = getMilkBasedCalculator();
+            final Calculable coffeeBeansBasedCalculator = getCoffeeBeansBasedCalculator();
+            return new ItemsCalculator(waterBasedCalculator, milkBasedCalculator, coffeeBeansBasedCalculator);
+        }
+
+        private static Calculable getCoffeeBeansBasedCalculator() {
+            return new CoffeeBeansBasedCalculator();
+        }
+
+        private static Calculable getMilkBasedCalculator() {
+            return new MilkBasedCalculator();
+        }
+
+        private static Calculable getWaterBasedCalculator() {
+            return new WaterBasedCalculator();
+        }
+
+        private static Machine getCoffeeMachine(MachineStore machineStore, MachineStoreCalculable machineStoreCalculable) {
+            return new CoffeeMachine(machineStore, machineStoreCalculable);
+        }
+
+        /**
+         * @param key    key mapped to message in properties file that explain what the user MUST be enter as input
+         * @param params params to get a customized message
+         * @return see {@link Scanner#nextInt()} return
+         */
+        private static int prompt(String key, Object... params) {
+            System.out.println(resourceBundle.get(key, params));
+            return reader.nextInt();
+        }
+    }
+  learner_created: false
+- name: src/app/Main.java
+  visible: true
+  text: |-
+    package app;
+
+    public class Main {
+
+        public static void main(String[] args) {
+            CoffeeMachineApplication.run(Main.class, args);
+        }
+    }
+  learner_created: false
+- name: src/service/coffeeCalculable/WaterBasedCalculator.java
+  visible: true
+  text: |-
+    package service.coffeeCalculable;
+
+    import service.ingredientCalculable.Calculable;
+
+    public class WaterBasedCalculator implements Calculable {
+        private static final int WATER_PER_ITEM = 200;
+
+        @Override
+        public int execute(int capacity) {
+            return capacity / WATER_PER_ITEM;
+        }
+    }
+  learner_created: false
+- name: src/service/ingredientCalculable/Calculable.java
+  visible: true
+  text: |-
+    package service.ingredientCalculable;
+
+    public interface Calculable {
+
+        /**
+         * @param capacity Ingredient capacity/size in a specified unit
+         * @return implementation depended value
+         */
+        int execute(int capacity);
+    }
+  learner_created: false
+- name: src/service/machineStoreCalculable/MachineStoreCalculable.java
+  visible: true
+  text: |-
+    package service.machineStoreCalculable;
+
+    import machine.MachineStore;
+
+    public interface MachineStoreCalculable {
+
+        /**
+         * @param machineStore machine store that hold needed ingredient so the machine works
+         * @return implementation depended value
+         */
+        int execute(MachineStore machineStore);
+    }
+  learner_created: false
+- name: src/service/resourceBundle/CustomizedResourceBundle.java
+  visible: true
+  text: |-
+    package service.resourceBundle;
+
+    import model.ResourceBundleFile;
+
+    import java.text.MessageFormat;
+    import java.util.Collections;
+    import java.util.Enumeration;
+    import java.util.ResourceBundle;
+
+    public class CustomizedResourceBundle extends ResourceBundle {
+
+        private final ResourceBundleFile resourceBundleFile;
+
+        public CustomizedResourceBundle(ResourceBundleFile resourceBundleFile) {
+            this.resourceBundleFile = resourceBundleFile;
+        }
+
+        private ResourceBundle getResourceBundle() {
+            return ResourceBundle.getBundle(resourceBundleFile.getFilename(), resourceBundleFile.getLocale());
+        }
+
+        public String get(String key, Object... args) {
+            return MessageFormat.format(getResourceBundle().getString(key), args);
+        }
+
+        @Override
+        protected Object handleGetObject(String key) {
+            ResourceBundle resourceBundle = getResourceBundle();
+            return resourceBundle != null ? resourceBundle.getString(key) : null;
+        }
+
+        @Override
+        public Enumeration<String> getKeys() {
+            ResourceBundle resourceBundle = getResourceBundle();
+            return resourceBundle != null ? resourceBundle.getKeys() : Collections.emptyEnumeration();
+        }
+    }
+  learner_created: false
+- name: src/machine/CoffeeMachine.java
+  visible: true
+  text: |-
+    package machine;
+
+    import service.machineStoreCalculable.MachineStoreCalculable;
+    import service.resourceBundle.CustomizedResourceBundle;
+    import util.ResourceBundleUtil;
+
+    import static machine.Constants.*;
+
+    public class CoffeeMachine extends AbstractMachine {
+
+        public CoffeeMachine(MachineStore machineStore, MachineStoreCalculable machineStoreCalculable) {
+            super(machineStore, machineStoreCalculable);
+        }
+
+        /**
+         * @return coffee machine status based on needed and available coffee cups
+         */
+        @Override
+        public String getResponse(int neededCoffeeCups) {
+            CustomizedResourceBundle resourceBundle = ResourceBundleUtil.getResourceBundle();
+            int availableCoffeeCups = machineStoreCalculable.execute(machineStore);
+            String response;
+            if (availableCoffeeCups == neededCoffeeCups) {
+                response = resourceBundle.get(RESPONSE_SUCCESS_ICAN);
+            } else if (availableCoffeeCups > neededCoffeeCups) {
+                response = resourceBundle.get(RESPONSE_SUCCESS_ICAN_DO_MORE, availableCoffeeCups - neededCoffeeCups);
+            } else {
+                response = resourceBundle.get(RESPONSE_FAILURE_ICANNOT, availableCoffeeCups);
+            }
+            return response;
+        }
+    }
+  learner_created: false
+- name: src/machine/Machine.java
+  visible: true
+  text: |-
+    package machine;
+
+    public interface Machine {
+
+        /**
+         * @param neededItems user needed Items
+         * @return implementation specific response
+         */
+        String getResponse(int neededItems);
+    }
+  learner_created: false
+- name: src/machine/MachineStore.java
+  visible: true
+  text: |-
+    package machine;
+
+    public interface MachineStore {
+    }
+  learner_created: false
+- name: src/machine/AbstractMachine.java
+  visible: true
+  text: |-
+    package machine;
+
+    import service.machineStoreCalculable.MachineStoreCalculable;
+
+    public abstract class AbstractMachine implements Machine {
+
+        protected MachineStore machineStore;
+        protected MachineStoreCalculable machineStoreCalculable;
+
+        public AbstractMachine(MachineStore machineStore, MachineStoreCalculable machineStoreCalculable) {
+            this.machineStore = machineStore;
+            this.machineStoreCalculable = machineStoreCalculable;
+        }
+    }
+  learner_created: false
+- name: src/main/resources/app.properties
+  visible: true
+  text: |-
+    # Units
+    unit.volume=ml
+    unit.mass=grams
+    # Ingredient
+    ingredient.water=water
+    ingredient.milk=milk
+    ingredient.coffeeBeans=coffee beans
+    # Prompt
+    prompt.ingredient=Write how many {0} of {1} the coffee machine has:
+    prompt.cups=Write how many cups of coffee you will need:
+    # Response
+    response.success.ICan=Yes, I can make that amount of coffee
+    response.success.ICanDoMore=Yes, I can make that amount of coffee (and even {0} more than that)
+    response.failure.ICannot=No, I can make only {0} cup(s) of coffee
+  learner_created: false
+- name: src/main/resources/config.properties
+  visible: true
+  text: properties.filename=app
+  learner_created: false
+- name: build.gradle
+  visible: true
+  text: |-
+    application {
+        mainClassName = 'app.Main'
+    }
+  learner_created: false
+- name: src/util/ResourceBundleUtil.java
+  visible: true
+  text: |-
+    package util;
+
+    import model.ResourceBundleFile;
+    import service.resourceBundle.CustomizedResourceBundle;
+
+    import java.util.Locale;
+    import java.util.ResourceBundle;
+
+    public class ResourceBundleUtil {
+
+        private static final ResourceBundle CONFIG_RESOURCE_BUNDLE = ResourceBundle.getBundle("config");
+        private static final String APP_PROPERTIES_FILENAME = CONFIG_RESOURCE_BUNDLE.getString("properties.filename");
+
+        public static CustomizedResourceBundle getResourceBundle() {
+            ResourceBundleFile resourceBundleFile = getResourceBundleFile();
+            return new CustomizedResourceBundle(resourceBundleFile);
+        }
+
+        private static ResourceBundleFile getResourceBundleFile() {
+            return new ResourceBundleFile(APP_PROPERTIES_FILENAME, Locale.getDefault());
+        }
+    }
+  learner_created: false
+- name: src/machine/Constants.java
+  visible: true
+  text: |
+    package machine;
+
+    public interface Constants {
+        String RESPONSE_SUCCESS_ICAN = "response.success.ICan";
+        String RESPONSE_SUCCESS_ICAN_DO_MORE = "response.success.ICanDoMore";
+        String RESPONSE_FAILURE_ICANNOT = "response.failure.ICannot";
+    }
+  learner_created: false
+- name: src/service/coffeeCalculable/ItemsCalculator.java
+  visible: true
+  text: |-
+    package service.coffeeCalculable;
+
+    import machine.MachineStore;
+    import model.CoffeeMachineStore;
+    import service.ingredientCalculable.Calculable;
+    import service.machineStoreCalculable.MachineStoreCalculable;
+
+    import java.util.ArrayList;
+    import java.util.Comparator;
+    import java.util.List;
+
+    public class ItemsCalculator implements MachineStoreCalculable {
+
+        private final Calculable waterBasedCalculator;
+        private final Calculable milkBasedCalculator;
+        private final Calculable coffeeBeansBasedBasedCalculator;
+
+        public ItemsCalculator(Calculable waterBasedCalculator, Calculable milkBasedCalculator, Calculable coffeeBeansBasedBasedCalculator) {
+            this.waterBasedCalculator = waterBasedCalculator;
+            this.milkBasedCalculator = milkBasedCalculator;
+            this.coffeeBeansBasedBasedCalculator = coffeeBeansBasedBasedCalculator;
+        }
+
+        @Override
+        public int execute(MachineStore machineStore) {
+            CoffeeMachineStore coffeeStore = (CoffeeMachineStore) machineStore;
+            List<Integer> ingredientBasedProducibleItems = new ArrayList<>(3);
+            ingredientBasedProducibleItems.add(getProducibleItems(waterBasedCalculator, coffeeStore.getWater()));
+            ingredientBasedProducibleItems.add(getProducibleItems(milkBasedCalculator, coffeeStore.getMilk()));
+            ingredientBasedProducibleItems.add(getProducibleItems(coffeeBeansBasedBasedCalculator, coffeeStore.getCoffeeBeans()));
+            return ingredientBasedProducibleItems.stream()
+                    .min(Comparator.naturalOrder())
+                    .orElse(0);
+        }
+
+        private int getProducibleItems(Calculable calculable, int ingredient) {
+            return calculable.execute(ingredient);
+        }
+    }
+  learner_created: false
+- name: src/model/CoffeeMachineStore.java
+  visible: true
+  text: |-
+    package model;
+
+    import machine.MachineStore;
+
+    import java.util.HashMap;
+    import java.util.Map;
+
+    public class CoffeeMachineStore implements MachineStore {
+
+        private final Map<String, Object> items;
+
+        public CoffeeMachineStore() {
+            items = new HashMap<>();
+        }
+
+        public <T> void addItem(Key<T> key, T value) {
+            items.put(key.getName(), value);
+        }
+
+        public <T> T getItem(Key<T> key) {
+            return (T) items.get(key.getName());
+        }
+    }
+  learner_created: false
+- name: src/model/ResourceBundleFile.java
+  visible: true
+  text: |-
+    package model;
+
+    import java.util.Locale;
+
+    public class ResourceBundleFile {
+
+        private final String filename;
+        private final Locale locale;
+
+        public ResourceBundleFile(String filename, Locale locale) {
+            this.filename = filename;
+            this.locale = locale;
+        }
+
+        public String getFilename() {
+            return filename;
+        }
+
+        public Locale getLocale() {
+            return locale;
+        }
+    }
+  learner_created: false
+- name: src/model/Key.java
+  visible: true
+  text: |-
+    package model;
+
+    public class Key<T> {
+
+        private final String name;
+
+        public Key(String name) {
+            this.name = name;
+        }
+
+        public static <T> Key<T> create(String name) {
+            return new Key<>(name);
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        @Override
+        public int hashCode() {
+            return name.hashCode();
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj == this) {
+                return true;
+            }
+
+            if (obj instanceof Key) {
+                Key<?> key = (Key<?>) obj;
+                return name.equals(key.getName());
+            }
+
+            return false;
+        }
+
+        @Override
+        public String toString() {
+            return getName();
+        }
+    }
+  learner_created: false
+- name: src/action/Action.java
+  visible: true
+  text: |-
+    package action;
+
+    import model.Request;
+    import model.Response;
+
+    public interface Action {
+
+        String getName();
+
+        Response execute(Request request);
+    }
+  learner_created: false
+- name: src/action/BuyAction.java
+  visible: true
+  text: |-
+    package action;
+
+    import constant.AttributeKeys;
+    import model.Coffee;
+    import model.Key;
+    import model.Request;
+    import model.Response;
+
+    public class BuyAction implements Action {
+
+        private static final Key<String> ITEM_TYPE = AttributeKeys.COFFEE;
+
+        @Override
+        public String getName() {
+            return "buy";
+        }
+
+        @Override
+        public Response execute(Request request) {
+            Coffee coffee = request.getAttribute(AttributeKeys.COFFEE);
+            return null;
+        }
+    }
+  learner_created: false
+- name: src/action/FillAction.java
+  visible: true
+  text: |-
+    package action;
+
+    import model.Request;
+    import model.Response;
+
+    public class FillAction implements Action {
+
+        @Override
+        public String getName() {
+            return null;
+        }
+
+        @Override
+        public Response execute(Request request) {
+            return null;
+        }
+    }
+  learner_created: false
+- name: src/action/TakeAction.java
+  visible: true
+  text: |
+    package action;
+
+    import model.Request;
+    import model.Response;
+
+    public class TakeAction implements Action {
+        @Override
+        public String getName() {
+            return null;
+        }
+
+        @Override
+        public Response execute(Request request) {
+            return null;
+        }
+    }
+  learner_created: false
+- name: src/model/Cappuccino.java
+  visible: true
+  text: |-
+    package model;
+
+    public class Cappuccino extends Coffee {
+
+        public Cappuccino() {
+            water = 200;
+            milk = 100;
+            coffeeBeans = 12;
+            cost = 6;
+        }
+    }
+  learner_created: false
+- name: src/model/Coffee.java
+  visible: true
+  text: |-
+    package model;
+
+    import java.util.Map;
+
+    public abstract class Coffee implements Item {
+
+        private String name;
+        private Map<Key, Object> neededItems;
+        private int cost;
+
+        protected final int disposableCups = 1;
+        protected int water;
+        protected int milk;
+        protected int coffeeBeans;
+
+        public Coffee(int water, int milk, int coffeeBeans, int cost) {
+            this.water = water;
+            this.milk = milk;
+            this.coffeeBeans = coffeeBeans;
+            this.cost = cost;
+        }
+
+        public String getType() {
+            return getClass().getSimpleName().toLowerCase();
+        }
+    }
+  learner_created: false
+- name: src/model/Espresso.java
+  visible: true
+  text: |-
+    package model;
+
+    public class Espresso extends Coffee {
+
+        public Espresso() {
+            water = 250;
+            coffeeBeans = 16;
+            cost = 4;
+        }
+    }
+  learner_created: false
+- name: src/model/Item.java
+  visible: true
+  text: |
+    package model;
+
+    public interface Item {
+    }
+  learner_created: false
+- name: src/model/Latte.java
+  visible: true
+  text: |-
+    package model;
+
+    public class Latte extends Coffee {
+
+        public Latte() {
+            water = 350;
+            milk = 75;
+            coffeeBeans = 20;
+            cost = 7;
+        }
+    }
+  learner_created: false
+- name: src/model/Request.java
+  visible: true
+  text: |-
+    package model;
+
+    import java.util.HashMap;
+    import java.util.Map;
+
+    public class Request {
+
+        Map<String, Object> attributes;
+
+        public Request() {
+            attributes = new HashMap<>();
+        }
+
+        public <T> T setAttribute(String key, T value) {
+            attributes.put(key, value);
+            return value;
+        }
+
+        public <T> T getAttribute(Key<T> key) {
+            return (T) attributes.get(key.getName());
+        }
+    }
+  learner_created: false
+- name: src/model/Response.java
+  visible: true
+  text: |
+    package model;
+
+    public class Response {
+    }
+  learner_created: false
+- name: src/service/CoffeeMaker.java
+  visible: true
+  text: |-
+    package service;
+
+    import machine.MachineStore;
+    import model.Item;
+
+    public class CoffeeMaker {
+
+        private MachineStore machineStore;
+        private Item coffee;
+
+        public void make() {
+
+        }
+
+        public void setCoffee(Item coffee) {
+            this.coffee = coffee;
+        }
+    }
+  learner_created: false
+- name: src/app/Factory.java
+  visible: true
+  text: |-
+    package app;
+
+    public class Factory {
+    }
+  learner_created: false
+- name: src/reader/Reader.java
+  visible: true
+  text: |-
+    package reader;
+
+    public interface Reader {
+
+        void read()
+    }
+  learner_created: false
+- name: src/reader/BuyReader.java
+  visible: true
+  text: |-
+    package reader;
+
+    import java.util.Scanner;
+
+    public class BuyReader implements Reader {
+
+        Scanner reader = new Scanner(System.in);
+
+        @Override
+        public void read() {
+            String item = reader.nextLine();
+            setRequest;
+            buy.execute(request);
+        }
+    }
+  learner_created: false
+- name: src/constant/AttributeKeys.java
+  visible: true
+  text: |-
+    package constant;
+
+    import model.Coffee;
+    import model.Key;
+
+    public interface AttributeKeys {
+
+        Key<Coffee> COFFEE = Key.create("coffee");
+    }
+  learner_created: false
+- name: src/constant/Constants.java
+  visible: true
+  text: |-
+    package constant;
+
+    public interface Constants {
+        String PROMPT_CUPS = "prompt.cups";
+        String PROMPT_INGREDIENT = "prompt.ingredient";
+        String UNIT_VOLUME = "unit.volume";
+        String UNIT_MASS = "unit.mass";
+        String WATER = "ingredient.water";
+        String MILK = "ingredient.milk";
+        String COFFEE_BEANS = "ingredient.coffeeBeans";
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/projects/33/stages/179/implement
+status: Failed
+record: 4
